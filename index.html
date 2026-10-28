@@ -69,6 +69,11 @@ h1,h2,h3{font-family:var(--display);line-height:1.1;margin:0;letter-spacing:-.02
 .nav a{text-decoration:none;padding:.5rem .8rem;border-radius:8px;font-weight:500;font-size:.98rem;color:#D8E3EE}
 .nav a:hover{background:rgba(255,255,255,.1);color:#fff}
 .nav a[aria-current="true"]{color:#fff;box-shadow:inset 0 -3px 0 var(--crimson);border-radius:8px 8px 0 0}
+.who{color:#CBD5E1;font-size:.92rem;padding:0 .6rem;max-width:230px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.who b{color:#fff;font-weight:600}
+.who .pill{display:inline-block;margin-left:.4rem;font-size:.78rem;font-weight:600;border-radius:6px;padding:0 .45rem;background:#FEF3C7;color:#92400E}
+.who .pill.ok{background:#CCFBF1;color:#115E59}
+.who .pill.no{background:#FFE4E6;color:#9F1239}
 .nav .login{background:var(--crimson);color:#fff;font-weight:600;margin-left:.5rem;box-shadow:none}
 .nav .login:hover{background:var(--crimson-dk);color:#fff}
 .burger{display:none;background:none;border:1px solid rgba(255,255,255,.3);color:#fff;border-radius:8px;padding:.4rem .6rem;cursor:pointer}
@@ -278,7 +283,9 @@ dialog .row{display:flex;gap:.6rem;flex-wrap:wrap}
       <a href="#tentang">Tentang</a>
       <a href="#faq">FAQ</a>
       <a href="#kontak">Kontak</a>
-      <a href="#" class="login" data-login>Masuk</a>
+      <span class="who" id="who" hidden></span>
+      <a href="admin.html" id="admin-link" hidden>Admin</a>
+      <a href="masuk.html" class="login" id="auth-link">Masuk</a>
     </nav>
   </div>
 </header>
@@ -460,6 +467,9 @@ dialog .row{display:flex;gap:.6rem;flex-wrap:wrap}
   </div>
 </dialog>
 
+<script src="assets/vendor/supabase.js"></script>
+<script src="config.js"></script>
+<script src="assets/auth.js"></script>
 <script>
 /* ============ PENGATURAN: ubah di sini ============ */
 const CONFIG = {
@@ -498,6 +508,7 @@ const STATUS = [
 ];
 
 const SERVICES = [
+  /* Isi "url" dengan alamat layanan sebenarnya; layanan "login:true" hanya terbuka untuk akun yang sudah disetujui. */
   { id:"s1", cat:"Karyawan",    icon:"users",   login:true,  title:"Direktori karyawan",   desc:"Cari kontak, jabatan, dan unit kerja rekan Anda." },
   { id:"s2", cat:"Karyawan",    icon:"cal",     login:true,  title:"Pengajuan cuti",       desc:"Ajukan cuti dan pantau persetujuan atasan." },
   { id:"s3", cat:"Karyawan",    icon:"doc",     login:true,  title:"Slip gaji",            desc:"Lihat dan unduh slip gaji bulanan." },
@@ -586,22 +597,34 @@ $("#dlg-x").addEventListener("click", () => dlg.close());
 $("#dlg-go").addEventListener("click", () => { dlg.close(); if(dlgAction) dlgAction(); });
 dlg.addEventListener("click", e => { if(e.target === dlg) dlg.close(); });
 
+let AUTH = null;   // { session, profile } bila sudah masuk
 function openService(id){
   const s = SERVICES.find(x => x.id === id);
   if(!s) return;
-  const msg = s.login
-    ? "Layanan ini memerlukan akun karyawan. Sambungkan tombol ini ke sistem login atau alamat layanan Anda sendiri."
-    : "Layanan ini terbuka untuk semua. Sambungkan tombol ini ke alamat layanan yang sebenarnya.";
-  openDialog(s.title, msg, "Hubungi admin", () => location.hash = "#kontak");
+  const toContact = () => { location.hash = "#kontak"; };
+  const toLogin = () => { location.href = "masuk.html?next=index.html"; };
+
+  if(s.login){
+    if(!Auth.configured){
+      openDialog(s.title, "Fitur akun belum dikonfigurasi. Isi public/config.js (lihat PANDUAN-AKUN.md).", "Tutup", null); return;
+    }
+    if(!AUTH){
+      openDialog(s.title, "Layanan ini hanya untuk akun karyawan. Silakan masuk atau daftar terlebih dahulu.", "Masuk / Daftar", toLogin); return;
+    }
+    const st = AUTH.profile && AUTH.profile.status;
+    if(st === "pending"){
+      openDialog(s.title, "Akun Anda masih menunggu persetujuan admin. Layanan ini akan terbuka setelah akun disetujui.", "Hubungi admin", toContact); return;
+    }
+    if(st !== "approved"){
+      openDialog(s.title, "Akses akun Anda tidak aktif. Hubungi admin untuk informasi lebih lanjut.", "Hubungi admin", toContact); return;
+    }
+  }
+  if(s.url){ window.open(s.url, "_blank", "noopener"); return; }
+  openDialog(s.title, "Alamat layanan ini belum diatur. Isi bidang url pada data layanan di index.html.", "Tutup", null);
 }
 $("#svc").addEventListener("click", e => {
   const b = e.target.closest(".svc"); if(b) openService(b.dataset.svc);
 });
-document.querySelectorAll("[data-login]").forEach(a => a.addEventListener("click", e => {
-  e.preventDefault();
-  openDialog("Masuk", "Fitur masuk belum tersambung. Hubungkan dengan sistem akun perusahaan Anda, misalnya SSO atau layanan autentikasi lain.", "Hubungi admin", () => location.hash = "#kontak");
-}));
-
 /* ============ KABAR ============ */
 function renderNews(){
   const [first, ...rest] = [...NEWS].sort((a,b) => b.date.localeCompare(a.date));
@@ -737,8 +760,31 @@ $("#form").addEventListener("submit", e => {
   note.textContent = "Aplikasi email Anda dibuka. Kirim pesan dari sana untuk menyelesaikan.";
 });
 
+/* ============ AKUN ============ */
+async function initAuth(){
+  if(!Auth.configured) return;
+  try{
+    AUTH = await Auth.getState();
+  }catch(e){ AUTH = null; }
+  if(!AUTH) return;
+  const p = AUTH.profile;
+  const who = $("#who");
+  const name = (p && p.full_name) || AUTH.session.user.email;
+  const st = p ? p.status : "none";
+  const label = st === "approved" ? (p.role === "admin" ? "Admin" : "Aktif") : st === "pending" ? "Menunggu persetujuan" : "Akses nonaktif";
+  const cls = st === "approved" ? "ok" : st === "pending" ? "" : "no";
+  who.innerHTML = `<b>${esc(name)}</b><span class="pill ${cls}">${label}</span>`;
+  who.hidden = false;
+  if(Auth.isAdmin(AUTH)) $("#admin-link").hidden = false;
+  const link = $("#auth-link");
+  link.textContent = "Keluar";
+  link.href = "#";
+  link.addEventListener("click", async e => { e.preventDefault(); await Auth.signOut(); location.reload(); });
+}
+initAuth();
+
 /* Menu aktif mengikuti bagian yang sedang dilihat */
-const spyLinks = [...document.querySelectorAll('.nav a[href^="#"]:not(.login)')];
+const spyLinks = [...document.querySelectorAll('.nav a[href^="#"]:not(.login):not(#auth-link)')];
 const spyMap = new Map(spyLinks.map(a => [a.getAttribute("href").slice(1), a]));
 const spy = new IntersectionObserver(entries => {
   entries.forEach(en => {

@@ -3,7 +3,13 @@
 Situs statis (HTML/CSS/JS) tanpa build step. Siap di-deploy ke Vercel.
 
 ## Struktur
-- `public/index.html`  : seluruh halaman (desain, data, dan skrip)
+- `public/index.html`  : beranda (desain, data, dan skrip)
+- `public/masuk.html`  : masuk, daftar, dan atur ulang kata sandi
+- `public/admin.html`  : manajemen akun (khusus Admin)
+- `public/config.js`   : isi URL dan kunci anon Supabase
+- `public/assets/`     : logo, gaya, `auth.js`, dan library Supabase
+- `supabase/schema.sql`: skema database akun (jalankan di Supabase SQL Editor)
+- `PANDUAN-AKUN.md`    : langkah mengaktifkan sistem akun
 - `vercel.json`        : konfigurasi Vercel (folder output + header keamanan)
 
 ## Cara mengubah isi
@@ -28,6 +34,9 @@ vercel          # preview
 vercel --prod   # produksi
 ```
 
+## Akun
+Sebelum tombol Masuk berfungsi, ikuti `PANDUAN-AKUN.md`. Tanpa itu, situs tetap tampil normal tetapi layanan "Perlu akun" menampilkan pesan belum dikonfigurasi.
+
 ## Catatan
-- Tombol layanan, tombol Masuk, dan tombol Unduh masih menampilkan dialog placeholder. Sambungkan ke alamat layanan atau file Anda.
+- Tombol layanan dan tombol Unduh masih menampilkan dialog placeholder. Isi `url` pada layanan di `index.html` dan arahkan tombol Unduh ke file Anda.
 - Untuk domain sendiri: Vercel > Project > Settings > Domains.
