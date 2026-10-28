@@ -1,0 +1,762 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>DIONSHE | Digital Information SHE</title>
+<meta name="description" content="DIONSHE (Digital Information SHE) adalah portal informasi digital Safety, Health & Environment: layanan, pengumuman, dan pustaka dokumen dalam satu pintu.">
+<meta property="og:title" content="DIONSHE | Digital Information SHE">
+<meta property="og:description" content="Portal informasi digital Safety, Health & Environment dalam satu pintu.">
+<meta property="og:locale" content="id_ID">
+<meta name="theme-color" content="#0F172A">
+<link rel="icon" type="image/png" href="assets/favicon-64.png">
+<link rel="apple-touch-icon" href="assets/apple-touch-icon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700;12..96,800&family=Figtree:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  /* Dominan */
+  --ink:#0F172A;
+  --ink-2:#1A1E29;
+  /* Latar & kartu */
+  --paper:#F8FAFC;
+  --card:#FFFFFF;
+  /* Aksen */
+  --crimson:#E11D48;
+  --crimson-dk:#DC2626;
+  /* Warna data / grafik */
+  --data-blue:#2563EB;
+  --data-teal:#0D9488;
+  --data-cyan:#0891B2;
+  --data-amber:#D97706;
+  --data-red:#E11D48;
+  --data-gray:#64748B;
+  /* Teks & garis */
+  --teal:#0F766E;
+  --teal-lt:#7DD3FC;
+  --slate:#475569;
+  --line:#DCE3EB;
+  --ok:#0F766E;
+  --warn:#B45309;
+  --crit:#E11D48;
+  --display:"Bricolage Grotesque","Segoe UI",system-ui,sans-serif;
+  --body:"Figtree","Segoe UI",system-ui,sans-serif;
+  --wrap:1160px;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth;scroll-padding-top:76px}
+body{margin:0;font-family:var(--body);font-size:1.0625rem;line-height:1.6;color:var(--ink);background:var(--paper);-webkit-font-smoothing:antialiased}
+img,svg{display:block;max-width:100%}
+a{color:inherit}
+button,input,select,textarea{font:inherit;color:inherit}
+:focus-visible{outline:3px solid var(--crimson);outline-offset:2px;border-radius:4px}
+.wrap{width:min(var(--wrap),100% - 2.5rem);margin-inline:auto}
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+.skip{position:absolute;left:1rem;top:-4rem;background:var(--crimson);color:#fff;padding:.6rem 1rem;border-radius:6px;font-weight:600;z-index:100}
+.skip:focus{top:1rem}
+h1,h2,h3{font-family:var(--display);line-height:1.1;margin:0;letter-spacing:-.02em}
+.ico{width:22px;height:22px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round;flex:none}
+
+/* Header */
+.top{position:sticky;top:0;z-index:50;background:var(--ink);color:#fff;border-bottom:1px solid rgba(255,255,255,.12)}
+.top .wrap{display:flex;align-items:center;justify-content:space-between;height:64px;gap:1rem}
+.brand{display:flex;align-items:center;gap:.7rem;text-decoration:none;font-family:var(--display);font-weight:800;font-size:1.35rem;letter-spacing:-.01em}
+.brand-txt{display:flex;flex-direction:column;line-height:1.05}
+.brand-txt small{font-family:var(--body);font-weight:500;font-size:.72rem;letter-spacing:.01em;color:#94A3B8;margin-top:.15rem}
+.brand-mark{width:40px;height:40px;border-radius:50%;background:#fff}
+.nav{display:flex;align-items:center;gap:.25rem}
+.nav a{text-decoration:none;padding:.5rem .8rem;border-radius:8px;font-weight:500;font-size:.98rem;color:#D8E3EE}
+.nav a:hover{background:rgba(255,255,255,.1);color:#fff}
+.nav a[aria-current="true"]{color:#fff;box-shadow:inset 0 -3px 0 var(--crimson);border-radius:8px 8px 0 0}
+.nav .login{background:var(--crimson);color:#fff;font-weight:600;margin-left:.5rem;box-shadow:none}
+.nav .login:hover{background:var(--crimson-dk);color:#fff}
+.burger{display:none;background:none;border:1px solid rgba(255,255,255,.3);color:#fff;border-radius:8px;padding:.4rem .6rem;cursor:pointer}
+
+/* Hero */
+.hero{background:var(--ink);color:#fff;padding:clamp(2.5rem,6vw,5rem) 0 clamp(3rem,7vw,5.5rem);position:relative}
+.hero::before{content:"";position:absolute;inset:0;background:
+  repeating-linear-gradient(0deg,transparent 0 47px,rgba(255,255,255,.045) 47px 48px),
+  repeating-linear-gradient(90deg,transparent 0 47px,rgba(255,255,255,.045) 47px 48px);
+  mask-image:linear-gradient(90deg,transparent,#000 70%);-webkit-mask-image:linear-gradient(90deg,transparent,#000 70%)}
+.hero .wrap{position:relative;z-index:2;display:grid;grid-template-columns:1.25fr .85fr;gap:clamp(2rem,5vw,4rem);align-items:start}
+.hero h1{font-size:clamp(2.4rem,5.4vw,4.4rem);font-weight:800;max-width:15ch}
+.hero .lead{margin:1.2rem 0 1.8rem;color:#CBD5E1;max-width:46ch;font-size:1.15rem}
+
+.search{position:relative;max-width:620px}
+.search-box{display:flex;align-items:center;gap:.7rem;background:#fff;color:var(--ink);border-radius:14px;padding:.35rem .5rem .35rem 1rem;box-shadow:0 0 0 3px rgba(225,29,72,0)}
+.search-box:focus-within{box-shadow:0 0 0 3px var(--crimson)}
+.search-box input{flex:1;border:0;background:none;padding:.8rem .2rem;font-size:1.1rem;outline:none;min-width:0}
+.search-box input::placeholder{color:#6B7B8C}
+.kbd{border:1px solid var(--line);border-radius:6px;padding:.1rem .5rem;font-size:.85rem;color:var(--slate);background:var(--paper)}
+.results{position:absolute;left:0;right:0;top:calc(100% + 8px);background:#fff;color:var(--ink);border-radius:14px;box-shadow:0 18px 50px rgba(5,20,35,.35);max-height:min(60vh,420px);overflow:auto;z-index:20;padding:.4rem}
+.results[hidden]{display:none}
+.res-group{font-size:.85rem;font-weight:600;color:var(--slate);padding:.6rem .7rem .2rem}
+.res-item{display:flex;gap:.8rem;align-items:flex-start;width:100%;text-align:left;background:none;border:0;border-radius:10px;padding:.6rem .7rem;cursor:pointer}
+.res-item:hover,.res-item[aria-selected="true"]{background:#F1F5F9;box-shadow:inset 3px 0 0 var(--crimson)}
+.res-item .t{font-weight:600;display:block;line-height:1.3}
+.res-item .d{font-size:.92rem;color:var(--slate);display:block;line-height:1.35}
+.res-empty{padding:1rem;color:var(--slate)}
+.quick{display:flex;flex-wrap:wrap;gap:.5rem;margin-top:1rem;align-items:center;color:#B7C8DA;font-size:.95rem}
+.chip{border:1px solid rgba(255,255,255,.28);background:transparent;color:#fff;border-radius:999px;padding:.3rem .85rem;cursor:pointer;font-size:.95rem}
+.chip:hover{background:rgba(255,255,255,.12)}
+
+/* Papan informasi */
+.board{background:var(--paper);color:var(--ink);border-radius:18px;padding:1.4rem;border-top:6px solid var(--crimson)}
+.board h2{font-size:1.25rem;display:flex;justify-content:space-between;align-items:baseline;gap:1rem;flex-wrap:wrap}
+.board .date{font-family:var(--body);font-size:.95rem;font-weight:500;color:var(--slate);letter-spacing:0}
+.status{list-style:none;margin:1rem 0 0;padding:0}
+.status li{display:flex;align-items:center;gap:.7rem;padding:.65rem 0;border-top:1px solid var(--line)}
+.status .nm{flex:1;font-weight:500}
+.status .st{font-size:.92rem;font-weight:600;display:flex;align-items:center;gap:.4rem}
+.st.ok{color:var(--ok)}
+.st.warn{color:var(--warn)}
+.st i{width:10px;height:10px;border-radius:50%;background:currentColor;display:inline-block}
+.st.crit{color:var(--crit)}
+.st.warn i,.st.crit i{border-radius:2px;transform:rotate(45deg)}
+.pin{margin-top:1rem;background:#fff;border:1px solid var(--line);border-radius:12px;padding:.9rem 1rem}
+.pin b{display:block;font-family:var(--display);font-size:1.02rem;margin-bottom:.15rem}
+.pin span{color:var(--slate);font-size:.95rem}
+
+/* Sections */
+.sec{padding:clamp(3.5rem,8vw,6rem) 0}
+.sec.alt{background:var(--card);border-block:1px solid var(--line)}
+.sec-head{display:flex;justify-content:space-between;align-items:flex-end;gap:1.5rem;flex-wrap:wrap;margin-bottom:2rem}
+.sec-head h2{font-size:clamp(1.9rem,3.6vw,2.7rem);font-weight:800}
+.sec-head p{margin:.6rem 0 0;color:var(--slate);max-width:52ch}
+
+/* Layanan */
+.tabs{display:flex;gap:.4rem;flex-wrap:wrap}
+.tab{border:1.5px solid var(--ink);background:transparent;border-radius:999px;padding:.4rem 1rem;cursor:pointer;font-weight:500}
+.tab[aria-pressed="true"]{background:var(--crimson);border-color:var(--crimson);color:#fff}
+.svc-grid{display:grid;grid-template-columns:repeat(2,1fr);border-top:2px solid var(--ink)}
+.svc{display:flex;gap:1rem;align-items:flex-start;text-align:left;background:none;border:0;border-bottom:1px solid var(--line);padding:1.4rem 1.2rem 1.4rem .4rem;cursor:pointer;transition:background .15s}
+.svc:nth-child(odd){border-right:1px solid var(--line);padding-right:1.6rem}
+.svc:nth-child(even){padding-left:1.6rem}
+.svc:hover{background:#fff}
+.svc .ib{width:46px;height:46px;border-radius:12px;background:var(--data-gray);color:#fff;display:grid;place-items:center;flex:none}
+.t-blue.ib{background:var(--data-blue)}
+.t-teal.ib{background:var(--data-teal)}
+.t-cyan.ib{background:var(--data-cyan)}
+.t-amber.ib{background:var(--data-amber)}
+.t-red.ib{background:var(--data-red)}
+.svc h3{font-size:1.2rem;font-weight:700;display:flex;align-items:center;gap:.6rem;flex-wrap:wrap}
+.svc p{margin:.3rem 0 0;color:var(--slate);font-size:1rem;line-height:1.5}
+.badge{font-family:var(--body);font-size:.8rem;font-weight:600;border-radius:6px;padding:.05rem .5rem;letter-spacing:0}
+.badge.lock{background:#FEF3C7;color:#92400E}
+.badge.open{background:#CCFBF1;color:#115E59}
+
+/* Kabar */
+.news{display:grid;grid-template-columns:1.2fr 1fr;gap:2rem}
+.feature{background:var(--ink);color:#fff;border-radius:18px;padding:clamp(1.5rem,3vw,2.4rem);display:flex;flex-direction:column;justify-content:space-between;min-height:340px}
+.feature h3{font-size:clamp(1.6rem,3vw,2.2rem);font-weight:800;margin:.8rem 0}
+.feature p{color:#CBD5E1;margin:0}
+.meta{font-size:.92rem;display:flex;gap:.8rem;align-items:center;color:#CBD5E1;font-weight:500}
+.meta .cat{border-radius:6px;padding:.05rem .55rem;font-weight:600;background:rgba(255,255,255,.12);color:#E2E8F0}
+.feature .cat.t-blue{background:rgba(96,165,250,.22);color:#BFDBFE}
+.feature .cat.t-teal{background:rgba(45,212,191,.2);color:#99F6E4}
+.feature .cat.t-amber{background:rgba(251,191,36,.2);color:#FDE68A}
+.feature .cat.t-red{background:rgba(251,113,133,.22);color:#FECDD3}
+.feature .more{margin-top:1.5rem;align-self:flex-start;background:var(--crimson);color:#fff;border:0;border-radius:10px;padding:.7rem 1.2rem;font-weight:600;cursor:pointer}
+.feature .more:hover{background:var(--crimson-dk)}
+.news-list{list-style:none;margin:0;padding:0;border-top:2px solid var(--ink)}
+.news-list li{border-bottom:1px solid var(--line)}
+.news-list button{width:100%;text-align:left;background:none;border:0;padding:1.1rem .2rem;cursor:pointer;display:block}
+.news-list button:hover h3{text-decoration:underline;text-underline-offset:4px}
+.news-list h3{font-size:1.2rem;font-weight:700;margin:.2rem 0}
+.news-list .meta{color:var(--slate)}
+.news-list .meta .cat{background:#E2E8F0;color:#334155}
+.news-list .cat.t-blue{background:#DBEAFE;color:#1D4ED8}
+.news-list .cat.t-teal{background:#CCFBF1;color:#0F766E}
+.news-list .cat.t-amber{background:#FEF3C7;color:#92400E}
+.news-list .cat.t-red{background:#FFE4E6;color:#BE123C}
+.news-list p{margin:0;color:var(--slate);font-size:.98rem}
+
+/* Dokumen */
+.doc-tools{display:flex;gap:.8rem;flex-wrap:wrap;margin-bottom:1rem}
+.doc-tools input,.doc-tools select{border:1.5px solid var(--ink);background:#fff;border-radius:10px;padding:.6rem .9rem;min-width:0}
+.doc-tools input{flex:1 1 240px}
+.table-wrap{overflow-x:auto;background:#fff;border-radius:14px;border:1px solid var(--line)}
+table{width:100%;border-collapse:collapse;min-width:620px}
+th,td{text-align:left;padding:.9rem 1.1rem;border-bottom:1px solid var(--line)}
+th{font-size:.92rem;color:var(--slate);font-weight:600;background:#F8FAFC}
+tr:last-child td{border-bottom:0}
+td.name{font-weight:600}
+.ft{display:inline-block;border-radius:6px;padding:.05rem .5rem;font-size:.85rem;font-weight:600;background:#E2E8F0;color:#334155}
+.ft.f-pdf{background:#FFE4E6;color:#BE123C}
+.ft.f-docx{background:#DBEAFE;color:#1D4ED8}
+.ft.f-xlsx{background:#CCFBF1;color:#0F766E}
+.dl{background:none;border:1.5px solid var(--ink);border-radius:8px;padding:.35rem .8rem;cursor:pointer;font-weight:500}
+.dl:hover{background:var(--crimson);border-color:var(--crimson);color:#fff}
+.empty{padding:1.4rem;color:var(--slate)}
+
+/* Tentang + FAQ */
+.about{display:grid;grid-template-columns:1fr 1fr;gap:clamp(2rem,5vw,4rem)}
+.about .pill{display:grid;gap:1.1rem;margin-top:1.5rem}
+.pill div{display:flex;gap:1rem;align-items:flex-start}
+.pill .ib{width:44px;height:44px;border-radius:50%;background:var(--teal);color:#fff;display:grid;place-items:center;flex:none}
+.pill b{font-family:var(--display);font-size:1.12rem;display:block}
+.pill span{color:var(--slate);font-size:1rem}
+details{border-bottom:1px solid var(--line)}
+details:first-of-type{border-top:2px solid var(--ink)}
+summary{cursor:pointer;list-style:none;padding:1.1rem .2rem;font-weight:600;display:flex;justify-content:space-between;gap:1rem;align-items:center}
+summary::-webkit-details-marker{display:none}
+summary::after{content:"+";font-size:1.5rem;line-height:1;transition:transform .2s;color:var(--teal)}
+details[open] summary::after{transform:rotate(45deg)}
+details p{margin:0;padding:0 .2rem 1.2rem;color:var(--slate);max-width:60ch}
+
+/* Kontak */
+.contact{display:grid;grid-template-columns:.9fr 1.1fr;gap:clamp(2rem,5vw,4rem)}
+.info{display:grid;gap:1.2rem;margin-top:1.5rem}
+.info a,.info div{display:flex;gap:.9rem;align-items:flex-start;text-decoration:none}
+.info .ib{width:42px;height:42px;border-radius:10px;background:var(--ink);color:#fff;display:grid;place-items:center;flex:none}
+.info b{display:block;font-weight:600}
+.info span{color:var(--slate);font-size:1rem}
+form{background:#fff;border:1px solid var(--line);border-radius:16px;padding:clamp(1.2rem,3vw,2rem);display:grid;gap:1rem}
+label{display:grid;gap:.35rem;font-weight:600;font-size:.98rem}
+label small{font-weight:400;color:var(--slate)}
+form input,form textarea,form select{border:1.5px solid #9FB0C1;border-radius:10px;padding:.7rem .9rem;background:#fff;font-weight:400}
+form textarea{min-height:130px;resize:vertical}
+.btn{background:var(--crimson);color:#fff;border:0;border-radius:10px;padding:.85rem 1.4rem;font-weight:600;cursor:pointer;justify-self:start}
+.btn:hover{background:var(--crimson-dk)}
+.note{font-size:.92rem;color:var(--slate);margin:0}
+
+footer{background:var(--ink);color:#CBD5E1;padding:2.5rem 0}
+footer .wrap{display:flex;justify-content:space-between;gap:1.5rem;flex-wrap:wrap;align-items:flex-start}
+footer .brand{color:#fff}
+footer p{margin:.5rem 0 0;max-width:42ch;font-size:.97rem}
+footer ul{list-style:none;margin:0;padding:0;display:flex;gap:1.2rem;flex-wrap:wrap}
+footer a{text-decoration:none}
+footer a:hover{text-decoration:underline}
+.copy{width:100%;border-top:1px solid rgba(255,255,255,.15);padding-top:1.2rem;font-size:.92rem}
+
+dialog{border:0;border-radius:16px;padding:1.6rem;max-width:min(460px,92vw);box-shadow:0 30px 80px rgba(5,20,35,.45)}
+dialog::backdrop{background:rgba(10,25,40,.6)}
+dialog h3{font-size:1.4rem;margin-bottom:.5rem}
+dialog p{margin:.4rem 0 1.2rem;color:var(--slate)}
+dialog .row{display:flex;gap:.6rem;flex-wrap:wrap}
+.btn.ghost{background:transparent;color:var(--ink);border:1.5px solid var(--ink)}
+.btn.ghost:hover{background:#F1F5F9}
+
+.flash{animation:flash 1.6s ease-out}
+@keyframes flash{0%{background:#FFE4E6}100%{background:transparent}}
+.hero-in{animation:rise .7s cubic-bezier(.2,.7,.2,1) both}
+.hero-in.d2{animation-delay:.12s}
+@keyframes rise{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}
+
+@media (max-width:900px){
+  .hero .wrap,.news,.about,.contact{grid-template-columns:1fr}
+  .svc-grid{grid-template-columns:1fr}
+  .svc:nth-child(odd){border-right:0;padding-right:.4rem}
+  .svc:nth-child(even){padding-left:.4rem}
+  .burger{display:block}
+  .nav{position:absolute;left:0;right:0;top:64px;background:var(--ink);flex-direction:column;align-items:stretch;padding:.6rem 1.25rem 1rem;display:none;border-bottom:1px solid rgba(255,255,255,.12)}
+  .nav.open{display:flex}
+  .nav .login{margin:.4rem 0 0;text-align:center}
+}
+@media (max-width:600px){.kbd{display:none}}
+@media (prefers-reduced-motion:reduce){
+  html{scroll-behavior:auto}
+  *,*::before,*::after{animation:none!important;transition:none!important}
+}
+</style>
+</head>
+<body>
+<a class="skip" href="#layanan">Langsung ke layanan</a>
+
+<header class="top">
+  <div class="wrap">
+    <a class="brand" href="#top" aria-label="DIONSHE, ke beranda">
+      <img class="brand-mark" src="assets/logo-192.png" width="40" height="40" alt="">
+      <span class="brand-txt"><span data-bind="name">DIONSHE</span><small>Digital Information SHE</small></span>
+    </a>
+    <button class="burger" id="burger" aria-expanded="false" aria-controls="nav">Menu</button>
+    <nav class="nav" id="nav" aria-label="Navigasi utama">
+      <a href="#layanan">Layanan</a>
+      <a href="#kabar">Kabar</a>
+      <a href="#dokumen">Dokumen</a>
+      <a href="#tentang">Tentang</a>
+      <a href="#faq">FAQ</a>
+      <a href="#kontak">Kontak</a>
+      <a href="#" class="login" data-login>Masuk</a>
+    </nav>
+  </div>
+</header>
+
+<main id="top">
+<section class="hero" aria-labelledby="judul">
+  <div class="wrap">
+    <div>
+      <h1 id="judul" class="hero-in">Semua informasi perusahaan, satu pintu.</h1>
+      <p class="lead hero-in d2">Cari layanan, pengumuman, dan dokumen resmi tanpa perlu bertanya ke banyak orang.</p>
+
+      <div class="search hero-in d2" role="search">
+        <label class="sr" for="q">Cari layanan, kabar, atau dokumen</label>
+        <div class="search-box">
+          <svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M11 4a7 7 0 1 0 0 14 7 7 0 0 0 0-14zM21 21l-5-5"/></svg>
+          <input id="q" type="search" autocomplete="off" placeholder="Cari: cuti, VPN, kebijakan" role="combobox" aria-expanded="false" aria-controls="results" aria-autocomplete="list">
+          <span class="kbd" aria-hidden="true">/</span>
+        </div>
+        <div class="results" id="results" role="listbox" aria-label="Hasil pencarian" hidden></div>
+      </div>
+      <div class="quick">
+        <span>Sering dicari:</span>
+        <button class="chip" data-q="cuti">Cuti</button>
+        <button class="chip" data-q="helpdesk">Helpdesk IT</button>
+        <button class="chip" data-q="slip gaji">Slip gaji</button>
+        <button class="chip" data-q="panduan">Panduan</button>
+      </div>
+    </div>
+
+    <aside class="board hero-in d2" aria-labelledby="papan">
+      <h2 id="papan">Papan informasi <span class="date" id="today"></span></h2>
+      <ul class="status" id="status"></ul>
+      <div class="pin">
+        <b id="pin-title"></b>
+        <span id="pin-text"></span>
+      </div>
+    </aside>
+  </div>
+</section>
+
+<section class="sec" id="layanan" aria-labelledby="h-layanan">
+  <div class="wrap">
+    <div class="sec-head">
+      <div>
+        <h2 id="h-layanan">Layanan</h2>
+        <p>Pilih layanan sesuai kebutuhan. Layanan bertanda kunci memerlukan akun karyawan.</p>
+      </div>
+      <div class="tabs" id="tabs" role="group" aria-label="Filter kategori layanan"></div>
+    </div>
+    <div class="svc-grid" id="svc"></div>
+  </div>
+</section>
+
+<section class="sec alt" id="kabar" aria-labelledby="h-kabar">
+  <div class="wrap">
+    <div class="sec-head">
+      <div>
+        <h2 id="h-kabar">Kabar terbaru</h2>
+        <p>Pengumuman resmi dari manajemen dan tim terkait, diurutkan dari yang terbaru.</p>
+      </div>
+    </div>
+    <div class="news">
+      <article class="feature" id="feature"></article>
+      <ul class="news-list" id="news-list"></ul>
+    </div>
+  </div>
+</section>
+
+<section class="sec" id="dokumen" aria-labelledby="h-dokumen">
+  <div class="wrap">
+    <div class="sec-head">
+      <div>
+        <h2 id="h-dokumen">Pustaka dokumen</h2>
+        <p>Kebijakan, panduan, dan formulir yang berlaku. Selalu gunakan versi terbaru.</p>
+      </div>
+    </div>
+    <div class="doc-tools">
+      <label class="sr" for="dq">Cari dokumen</label>
+      <input id="dq" type="search" placeholder="Cari judul dokumen">
+      <label class="sr" for="dt">Filter jenis dokumen</label>
+      <select id="dt">
+        <option value="">Semua jenis</option>
+        <option>Kebijakan</option>
+        <option>Panduan</option>
+        <option>Formulir</option>
+      </select>
+    </div>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th scope="col">Dokumen</th><th scope="col">Jenis</th><th scope="col">Format</th><th scope="col">Diperbarui</th><th scope="col"><span class="sr">Aksi</span></th></tr></thead>
+        <tbody id="docs"></tbody>
+      </table>
+      <p class="empty" id="docs-empty" hidden>Tidak ada dokumen yang cocok. Coba kata kunci lain atau pilih Semua jenis.</p>
+    </div>
+  </div>
+</section>
+
+<section class="sec alt" id="tentang" aria-labelledby="h-tentang">
+  <div class="wrap about">
+    <div>
+      <h2 id="h-tentang" style="font-size:clamp(1.9rem,3.6vw,2.7rem);font-weight:800">Tentang DIONSHE</h2>
+      <p style="color:var(--slate);max-width:52ch;margin:.8rem 0 0"><span data-bind="name">DIONSHE</span> (Digital Information SHE) adalah pusat informasi digital Safety, Health & Environment <span data-bind="company">PT Nama Perusahaan</span>. Portal ini menyatukan layanan internal, pengumuman, dan dokumen supaya karyawan menemukan jawaban dengan cepat dan dari sumber yang sama.</p>
+      <div class="pill">
+        <div><span class="ib"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M11 4a7 7 0 1 0 0 14 7 7 0 0 0 0-14zM21 21l-5-5"/></svg></span><p style="margin:0"><b>Mudah ditemukan</b><span>Satu kolom pencarian untuk layanan, kabar, dan dokumen.</span></p></div>
+        <div><span class="ib"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12l4 4 10-10"/></svg></span><p style="margin:0"><b>Selalu terbaru</b><span>Setiap dokumen mencantumkan tanggal pembaruan terakhir.</span></p></div>
+        <div><span class="ib"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3l8 3v6c0 5-3.5 8-8 9-4.5-1-8-4-8-9V6z"/></svg></span><p style="margin:0"><b>Akses sesuai peran</b><span>Informasi umum terbuka, data internal hanya untuk akun yang berhak.</span></p></div>
+      </div>
+    </div>
+    <div id="faq">
+      <h2 style="font-size:clamp(1.6rem,3vw,2.2rem);font-weight:800;margin-bottom:1.2rem">Pertanyaan yang sering diajukan</h2>
+      <details><summary>Siapa saja yang boleh memakai portal ini?</summary><p>Informasi umum seperti kabar dan sebagian dokumen bisa dibuka siapa saja. Layanan bertanda kunci hanya untuk karyawan yang memiliki akun.</p></details>
+      <details><summary>Bagaimana jika saya lupa kata sandi?</summary><p>Hubungi Helpdesk IT lewat formulir kontak di bawah atau datang langsung ke meja layanan pada jam kerja.</p></details>
+      <details><summary>Apakah status pengajuan yang tampil sudah sesuai kondisi sebenarnya?</summary><p>Ya. Status diperbarui langsung oleh tim penanggung jawab layanan, sehingga bisa dijadikan acuan utama.</p></details>
+      <details><summary>Di mana saya menemukan formulir resmi?</summary><p>Semua formulir ada di Pustaka dokumen. Pilih jenis Formulir pada filter untuk mempersempit daftar.</p></details>
+      <details><summary>Siapa yang saya hubungi jika menemukan informasi yang keliru?</summary><p>Kirim pesan lewat formulir kontak dan sebutkan halaman atau dokumen yang dimaksud. Tim kami akan memperbaikinya.</p></details>
+    </div>
+  </div>
+</section>
+
+<section class="sec" id="kontak" aria-labelledby="h-kontak">
+  <div class="wrap contact">
+    <div>
+      <h2 id="h-kontak" style="font-size:clamp(1.9rem,3.6vw,2.7rem);font-weight:800">Butuh bantuan?</h2>
+      <p style="color:var(--slate);max-width:46ch;margin:.8rem 0 0">Tim <span data-bind="name">DIONSHE</span> siap membantu kendala akses, pertanyaan layanan, atau koreksi informasi.</p>
+      <div class="info">
+        <a id="c-wa" href="#"><span class="ib"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 5h16v11H9l-5 4z"/></svg></span><span><b>WhatsApp</b><span id="c-wa-t"></span></span></a>
+        <a id="c-mail" href="#"><span class="ib"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 6h18v12H3zM3 7l9 7 9-7"/></svg></span><span><b>Email</b><span id="c-mail-t"></span></span></a>
+        <div><span class="ib"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 7v5l3 2M12 3a9 9 0 1 0 0 18 9 9 0 0 0 0-18z"/></svg></span><span><b>Jam layanan</b><span id="c-hours"></span></span></div>
+      </div>
+    </div>
+    <form id="form" novalidate>
+      <label>Nama lengkap
+        <input id="f-name" name="nama" required autocomplete="name">
+      </label>
+      <label>ID karyawan <small>(opsional)</small>
+        <input id="f-id" name="id" autocomplete="off">
+      </label>
+      <label>Topik
+        <select id="f-topic">
+          <option>Kendala akses</option>
+          <option>Pertanyaan layanan</option>
+          <option>Koreksi informasi</option>
+          <option>Lainnya</option>
+        </select>
+      </label>
+      <label>Pesan
+        <textarea id="f-msg" required></textarea>
+      </label>
+      <button class="btn" type="submit">Kirim pesan</button>
+      <p class="note" id="f-note" role="status">Pesan akan terbuka di aplikasi email Anda.</p>
+    </form>
+  </div>
+</section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <div>
+      <a class="brand" href="#top"><img class="brand-mark" src="assets/logo-192.png" width="40" height="40" alt=""><span data-bind="name">DIONSHE</span></a>
+      <p>Digital Information SHE. Pusat informasi digital Safety, Health & Environment <span data-bind="company">PT Nama Perusahaan</span>.</p>
+    </div>
+    <ul>
+      <li><a href="#layanan">Layanan</a></li>
+      <li><a href="#kabar">Kabar</a></li>
+      <li><a href="#dokumen">Dokumen</a></li>
+      <li><a href="#faq">FAQ</a></li>
+      <li><a href="#kontak">Kontak</a></li>
+    </ul>
+    <p class="copy">© <span id="yr"></span> <span data-bind="company">PT Nama Perusahaan</span>. Hak cipta dilindungi.</p>
+  </div>
+</footer>
+
+<dialog id="dlg" aria-labelledby="dlg-t">
+  <h3 id="dlg-t"></h3>
+  <p id="dlg-p"></p>
+  <div class="row">
+    <button class="btn" id="dlg-go" type="button">Hubungi admin</button>
+    <button class="btn ghost" id="dlg-x" type="button">Tutup</button>
+  </div>
+</dialog>
+
+<script>
+/* ============ PENGATURAN: ubah di sini ============ */
+const CONFIG = {
+  name: "DIONSHE",
+  company: "PT Nama Perusahaan",
+  email: "info@perusahaan.co.id",
+  whatsapp: "6281234567890",           // format internasional tanpa + atau 0 di depan
+  whatsappLabel: "+62 812-3456-7890",
+  hours: "Senin sampai Jumat, 08.00 - 17.00 WIB",
+  pinned: { title: "Pemeliharaan sistem HR", text: "Sabtu, 02.00 - 04.00 WIB. Pengajuan baru ditunda sementara." }
+};
+
+/* Ikon (path SVG 24x24) */
+const I = {
+  users:"M16 11a4 4 0 1 0-8 0 4 4 0 0 0 8 0zM4 21v-1a6 6 0 0 1 6-6h4a6 6 0 0 1 6 6v1",
+  cal:"M5 5h14v15H5zM5 9h14M9 3v4M15 3v4",
+  monitor:"M3 5h18v11H3zM8 20h8M12 16v4",
+  room:"M6 21V4h12v17M4 21h16M14 12h.01",
+  cart:"M4 5h2l2 11h10l2-8H7M10 20h.01M17 20h.01",
+  doc:"M6 3h9l4 4v14H6zM14 3v5h5M9 13h7M9 17h7",
+  book:"M12 6c-2-1.5-5-2-8-2v14c3 0 6 .5 8 2 2-1.5 5-2 8-2V4c-3 0-6 .5-8 2zM12 6v14",
+  flag:"M5 21V4M5 4h11l-2 4 2 4H5",
+  search:"M11 4a7 7 0 1 0 0 14 7 7 0 0 0 0-14zM21 21l-5-5",
+  news:"M5 4h14v16H5zM9 9h6M9 13h6M9 17h3",
+  file:"M6 3h9l4 4v14H6zM14 3v5h5"
+};
+const icon = d => `<svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="${d}"/></svg>`;
+const esc = s => String(s).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+
+/* ============ DATA: ganti dengan konten Anda ============ */
+const STATUS = [
+  { name:"Email & kalender", state:"ok",   text:"Normal" },
+  { name:"VPN",              state:"ok",   text:"Normal" },
+  { name:"Sistem HR",        state:"warn", text:"Pemeliharaan" },
+  { name:"Helpdesk",         state:"ok",   text:"Normal" }
+];
+
+const SERVICES = [
+  { id:"s1", cat:"Karyawan",    icon:"users",   login:true,  title:"Direktori karyawan",   desc:"Cari kontak, jabatan, dan unit kerja rekan Anda." },
+  { id:"s2", cat:"Karyawan",    icon:"cal",     login:true,  title:"Pengajuan cuti",       desc:"Ajukan cuti dan pantau persetujuan atasan." },
+  { id:"s3", cat:"Karyawan",    icon:"doc",     login:true,  title:"Slip gaji",            desc:"Lihat dan unduh slip gaji bulanan." },
+  { id:"s4", cat:"Karyawan",    icon:"book",    login:true,  title:"Portal pelatihan",     desc:"Daftar pelatihan dan lihat riwayat sertifikat Anda." },
+  { id:"s5", cat:"Operasional", icon:"room",    login:true,  title:"Pemesanan ruang rapat",desc:"Cek ketersediaan dan pesan ruang rapat." },
+  { id:"s6", cat:"Operasional", icon:"cart",    login:true,  title:"Pengajuan pengadaan",  desc:"Ajukan kebutuhan barang atau jasa dan pantau prosesnya." },
+  { id:"s7", cat:"Dukungan",    icon:"monitor", login:false, title:"Helpdesk IT",          desc:"Laporkan kendala perangkat, akun, atau jaringan." },
+  { id:"s8", cat:"Dukungan",    icon:"flag",    login:false, title:"Saran dan pelaporan",  desc:"Sampaikan masukan atau laporan secara terbuka." }
+];
+
+const NEWS = [
+  { id:"n1", date:"2026-10-24", cat:"Sistem",      title:"Jadwal pemeliharaan sistem akhir pekan", text:"Sistem HR akan tidak tersedia pada Sabtu pukul 02.00 sampai 04.00 WIB. Pengajuan cuti dan perubahan data dapat dilakukan kembali setelah pemeliharaan selesai." },
+  { id:"n2", date:"2026-10-20", cat:"Kebijakan",   title:"Kebijakan kerja hibrida periode November", text:"Pengaturan hari kerja di kantor untuk bulan November telah diperbarui. Baca ketentuan lengkap di Pustaka dokumen." },
+  { id:"n3", date:"2026-10-15", cat:"Pelatihan",   title:"Pendaftaran pelatihan kuartal IV dibuka", text:"Pilih program sesuai bidang Anda melalui Portal pelatihan. Kuota terbatas dan pendaftaran ditutup 31 Oktober." },
+  { id:"n4", date:"2026-10-10", cat:"Pengumuman",  title:"Peluncuran DIONSHE, pusat informasi digital SHE", text:"Layanan, kabar, dan dokumen kini tersedia dalam satu portal. Gunakan kolom pencarian di beranda untuk menemukan apa pun dengan cepat." }
+];
+
+const DOCS = [
+  { id:"d1", title:"Panduan karyawan baru",          type:"Panduan",   fmt:"PDF",  date:"2026-09-12" },
+  { id:"d2", title:"Kebijakan perjalanan dinas",     type:"Kebijakan", fmt:"PDF",  date:"2026-08-30" },
+  { id:"d3", title:"Kebijakan kerja hibrida",        type:"Kebijakan", fmt:"PDF",  date:"2026-10-20" },
+  { id:"d4", title:"Formulir pengajuan cuti",        type:"Formulir",  fmt:"DOCX", date:"2026-06-05" },
+  { id:"d5", title:"Panduan penggunaan VPN",         type:"Panduan",   fmt:"PDF",  date:"2026-07-18" },
+  { id:"d6", title:"Formulir klaim biaya",           type:"Formulir",  fmt:"XLSX", date:"2026-05-22" }
+];
+
+/* ============ UTIL ============ */
+const $ = s => document.querySelector(s);
+const fmtDate = iso => new Date(iso + "T00:00:00").toLocaleDateString("id-ID",{day:"numeric",month:"short",year:"numeric"});
+
+/* Isi pengaturan */
+document.querySelectorAll('[data-bind="name"]').forEach(e => e.textContent = CONFIG.name);
+document.querySelectorAll('[data-bind="company"]').forEach(e => e.textContent = CONFIG.company);
+document.title = CONFIG.name + " | Digital Information SHE";
+$("#yr").textContent = new Date().getFullYear();
+$("#today").textContent = new Date().toLocaleDateString("id-ID",{weekday:"long",day:"numeric",month:"long"});
+$("#pin-title").textContent = CONFIG.pinned.title;
+$("#pin-text").textContent = CONFIG.pinned.text;
+$("#c-wa").href = "https://wa.me/" + CONFIG.whatsapp;
+$("#c-wa-t").textContent = CONFIG.whatsappLabel;
+$("#c-mail").href = "mailto:" + CONFIG.email;
+$("#c-mail-t").textContent = CONFIG.email;
+$("#c-hours").textContent = CONFIG.hours;
+
+/* Status */
+$("#status").innerHTML = STATUS.map(s =>
+  `<li><span class="nm">${esc(s.name)}</span><span class="st ${s.state}"><i></i>${esc(s.text)}</span></li>`).join("");
+
+/* ============ LAYANAN ============ */
+const CAT_TONE = { Karyawan:"blue", Operasional:"teal", Dukungan:"amber" };
+const NEWS_TONE = { Sistem:"blue", Kebijakan:"teal", Pelatihan:"amber", Pengumuman:"gray", Kritis:"red" };
+let activeCat = "Semua";
+const cats = ["Semua", ...new Set(SERVICES.map(s => s.cat))];
+function renderTabs(){
+  $("#tabs").innerHTML = cats.map(c =>
+    `<button class="tab" data-cat="${esc(c)}" aria-pressed="${c===activeCat}">${esc(c)}</button>`).join("");
+}
+function renderServices(){
+  const list = SERVICES.filter(s => activeCat==="Semua" || s.cat===activeCat);
+  $("#svc").innerHTML = list.map(s => `
+    <button class="svc" data-svc="${s.id}" id="${s.id}">
+      <span class="ib t-${CAT_TONE[s.cat]||"gray"}">${icon(I[s.icon])}</span>
+      <span>
+        <h3>${esc(s.title)} <span class="badge ${s.login?'lock':'open'}">${s.login?'Perlu akun':'Terbuka'}</span></h3>
+        <p>${esc(s.desc)}</p>
+      </span>
+    </button>`).join("");
+}
+$("#tabs").addEventListener("click", e => {
+  const b = e.target.closest(".tab"); if(!b) return;
+  activeCat = b.dataset.cat; renderTabs(); renderServices();
+});
+renderTabs(); renderServices();
+
+/* Dialog */
+const dlg = $("#dlg");
+let dlgAction = null;
+function openDialog(title, text, btn, action){
+  $("#dlg-t").textContent = title;
+  $("#dlg-p").textContent = text;
+  $("#dlg-go").textContent = btn;
+  dlgAction = action;
+  dlg.showModal();
+}
+$("#dlg-x").addEventListener("click", () => dlg.close());
+$("#dlg-go").addEventListener("click", () => { dlg.close(); if(dlgAction) dlgAction(); });
+dlg.addEventListener("click", e => { if(e.target === dlg) dlg.close(); });
+
+function openService(id){
+  const s = SERVICES.find(x => x.id === id);
+  if(!s) return;
+  const msg = s.login
+    ? "Layanan ini memerlukan akun karyawan. Sambungkan tombol ini ke sistem login atau alamat layanan Anda sendiri."
+    : "Layanan ini terbuka untuk semua. Sambungkan tombol ini ke alamat layanan yang sebenarnya.";
+  openDialog(s.title, msg, "Hubungi admin", () => location.hash = "#kontak");
+}
+$("#svc").addEventListener("click", e => {
+  const b = e.target.closest(".svc"); if(b) openService(b.dataset.svc);
+});
+document.querySelectorAll("[data-login]").forEach(a => a.addEventListener("click", e => {
+  e.preventDefault();
+  openDialog("Masuk", "Fitur masuk belum tersambung. Hubungkan dengan sistem akun perusahaan Anda, misalnya SSO atau layanan autentikasi lain.", "Hubungi admin", () => location.hash = "#kontak");
+}));
+
+/* ============ KABAR ============ */
+function renderNews(){
+  const [first, ...rest] = [...NEWS].sort((a,b) => b.date.localeCompare(a.date));
+  const f = $("#feature");
+  f.id = first.id;
+  f.innerHTML = `
+    <div>
+      <div class="meta"><span class="cat t-${NEWS_TONE[first.cat]||"gray"}">${esc(first.cat)}</span><time datetime="${first.date}">${fmtDate(first.date)}</time></div>
+      <h3>${esc(first.title)}</h3>
+      <p>${esc(first.text)}</p>
+    </div>
+    <button class="more" data-news="${first.id}">Baca selengkapnya</button>`;
+  $("#news-list").innerHTML = rest.map(n => `
+    <li id="${n.id}"><button data-news="${n.id}">
+      <div class="meta"><span class="cat t-${NEWS_TONE[n.cat]||"gray"}">${esc(n.cat)}</span><time datetime="${n.date}">${fmtDate(n.date)}</time></div>
+      <h3>${esc(n.title)}</h3>
+      <p>${esc(n.text.length>110 ? n.text.slice(0,107)+'...' : n.text)}</p>
+    </button></li>`).join("");
+}
+function openNews(id){
+  const n = NEWS.find(x => x.id === id); if(!n) return;
+  openDialog(n.title, `${fmtDate(n.date)} | ${n.cat}. ${n.text}`, "Tanya admin", () => location.hash = "#kontak");
+}
+document.addEventListener("click", e => {
+  const b = e.target.closest("[data-news]"); if(b) openNews(b.dataset.news);
+});
+renderNews();
+
+/* ============ DOKUMEN ============ */
+function renderDocs(){
+  const q = $("#dq").value.trim().toLowerCase();
+  const t = $("#dt").value;
+  const list = DOCS.filter(d => (!t || d.type===t) && (!q || d.title.toLowerCase().includes(q)));
+  $("#docs").innerHTML = list.map(d => `
+    <tr id="${d.id}">
+      <td class="name">${esc(d.title)}</td>
+      <td>${esc(d.type)}</td>
+      <td><span class="ft f-${d.fmt.toLowerCase()}">${esc(d.fmt)}</span></td>
+      <td>${fmtDate(d.date)}</td>
+      <td><button class="dl" data-doc="${d.id}" aria-label="Unduh ${esc(d.title)}">Unduh</button></td>
+    </tr>`).join("");
+  $("#docs-empty").hidden = list.length > 0;
+}
+$("#dq").addEventListener("input", renderDocs);
+$("#dt").addEventListener("change", renderDocs);
+$("#docs").addEventListener("click", e => {
+  const b = e.target.closest("[data-doc]"); if(!b) return;
+  const d = DOCS.find(x => x.id === b.dataset.doc);
+  openDialog(d.title, "Tautan unduhan belum tersambung. Letakkan file di folder public/dokumen lalu arahkan tombol ini ke file tersebut.", "Tutup", null);
+});
+renderDocs();
+
+/* ============ PENCARIAN GLOBAL ============ */
+const input = $("#q"), box = $("#results");
+let hits = [], idx = -1;
+
+function index(){
+  return [
+    ...SERVICES.map(s => ({kind:"Layanan", id:s.id, title:s.title, desc:s.desc, sec:"#layanan", icon:I[s.icon], hay:(s.title+" "+s.desc+" "+s.cat)})),
+    ...NEWS.map(n => ({kind:"Kabar", id:n.id, title:n.title, desc:fmtDate(n.date)+" | "+n.cat, sec:"#kabar", icon:I.news, hay:(n.title+" "+n.text+" "+n.cat)})),
+    ...DOCS.map(d => ({kind:"Dokumen", id:d.id, title:d.title, desc:d.type+" | "+d.fmt, sec:"#dokumen", icon:I.file, hay:(d.title+" "+d.type)}))
+  ];
+}
+const ALL = index();
+
+function search(){
+  const q = input.value.trim().toLowerCase();
+  idx = -1;
+  if(!q){ box.hidden = true; input.setAttribute("aria-expanded","false"); return; }
+  const words = q.split(/\s+/);
+  hits = ALL.filter(x => words.every(w => x.hay.toLowerCase().includes(w))).slice(0,9);
+  if(!hits.length){
+    box.innerHTML = `<p class="res-empty">Tidak ada hasil untuk "${esc(input.value.trim())}". Coba kata yang lebih umum, misalnya "cuti" atau "panduan".</p>`;
+  } else {
+    let html = "", last = "", i = 0;
+    for(const h of hits){
+      if(h.kind !== last){ html += `<div class="res-group" role="presentation">${h.kind}</div>`; last = h.kind; }
+      html += `<button class="res-item" role="option" id="r${i}" data-i="${i}" aria-selected="false">${icon(h.icon)}<span><span class="t">${esc(h.title)}</span><span class="d">${esc(h.desc)}</span></span></button>`;
+      i++;
+    }
+    box.innerHTML = html;
+  }
+  box.hidden = false;
+  input.setAttribute("aria-expanded","true");
+}
+function choose(i){
+  const h = hits[i]; if(!h) return;
+  box.hidden = true; input.setAttribute("aria-expanded","false");
+  if(h.kind === "Layanan"){ activeCat = "Semua"; renderTabs(); renderServices(); }
+  if(h.kind === "Dokumen"){ $("#dq").value = ""; $("#dt").value = ""; renderDocs(); }
+  location.hash = h.sec;
+  setTimeout(() => {
+    const el = document.getElementById(h.id);
+    if(el){ el.classList.remove("flash"); void el.offsetWidth; el.classList.add("flash"); }
+  }, 350);
+}
+function mark(){
+  box.querySelectorAll(".res-item").forEach((b,i) => b.setAttribute("aria-selected", i===idx));
+  const cur = box.querySelector(`#r${idx}`);
+  if(cur){ cur.scrollIntoView({block:"nearest"}); input.setAttribute("aria-activedescendant","r"+idx); }
+}
+input.addEventListener("input", search);
+input.addEventListener("focus", () => { if(input.value.trim()) search(); });
+input.addEventListener("keydown", e => {
+  if(box.hidden) return;
+  if(e.key === "ArrowDown"){ e.preventDefault(); idx = Math.min(idx+1, hits.length-1); mark(); }
+  else if(e.key === "ArrowUp"){ e.preventDefault(); idx = Math.max(idx-1, 0); mark(); }
+  else if(e.key === "Enter"){ e.preventDefault(); choose(idx >= 0 ? idx : 0); }
+  else if(e.key === "Escape"){ box.hidden = true; input.setAttribute("aria-expanded","false"); }
+});
+box.addEventListener("click", e => {
+  const b = e.target.closest(".res-item"); if(b) choose(+b.dataset.i);
+});
+document.addEventListener("click", e => {
+  if(!e.target.closest(".search")){ box.hidden = true; input.setAttribute("aria-expanded","false"); }
+});
+document.addEventListener("keydown", e => {
+  if(e.key === "/" && !/INPUT|TEXTAREA|SELECT/.test(document.activeElement.tagName)){ e.preventDefault(); input.focus(); }
+});
+document.querySelectorAll(".chip").forEach(c => c.addEventListener("click", () => {
+  input.value = c.dataset.q; input.focus(); search();
+}));
+
+/* ============ KONTAK ============ */
+$("#form").addEventListener("submit", e => {
+  e.preventDefault();
+  const name = $("#f-name").value.trim(), msg = $("#f-msg").value.trim();
+  const note = $("#f-note");
+  if(!name || !msg){ note.textContent = "Isi nama lengkap dan pesan terlebih dahulu."; return; }
+  const id = $("#f-id").value.trim();
+  const body = `Nama: ${name}\nID karyawan: ${id || "-"}\nTopik: ${$("#f-topic").value}\n\n${msg}`;
+  location.href = `mailto:${CONFIG.email}?subject=${encodeURIComponent("[" + CONFIG.name + "] " + $("#f-topic").value)}&body=${encodeURIComponent(body)}`;
+  note.textContent = "Aplikasi email Anda dibuka. Kirim pesan dari sana untuk menyelesaikan.";
+});
+
+/* Menu aktif mengikuti bagian yang sedang dilihat */
+const spyLinks = [...document.querySelectorAll('.nav a[href^="#"]:not(.login)')];
+const spyMap = new Map(spyLinks.map(a => [a.getAttribute("href").slice(1), a]));
+const spy = new IntersectionObserver(entries => {
+  entries.forEach(en => {
+    if(en.isIntersecting){
+      spyLinks.forEach(a => a.removeAttribute("aria-current"));
+      const a = spyMap.get(en.target.id); if(a) a.setAttribute("aria-current","true");
+    }
+  });
+}, { rootMargin:"-35% 0px -55% 0px" });
+["layanan","kabar","dokumen","tentang","faq","kontak"].forEach(id => { const el = document.getElementById(id); if(el) spy.observe(el); });
+
+/* Menu mobile */
+const burger = $("#burger"), nav = $("#nav");
+burger.addEventListener("click", () => {
+  const o = nav.classList.toggle("open");
+  burger.setAttribute("aria-expanded", o);
+});
+nav.addEventListener("click", e => { if(e.target.closest("a")){ nav.classList.remove("open"); burger.setAttribute("aria-expanded","false"); } });
+</script>
+</body>
+</html>
